@@ -10,6 +10,7 @@
     service: dhcp
     permanent: True
     immediate: True
+    masquerade: yes
     state: enabled
   when: firewalld.rc == 0
   become: True
