@@ -59,8 +59,10 @@
     datacenter: '{{ vsphere.datacenter_name }}'
     cluster: '{{ vsphere.cluster_name }}'
     name: '{{ vsphere.template_name }}'
-    networks:
-      - label: '{{ template_network_info.network_data["0"].label }}'
-        state: absent
+    # networks:
+    #   - label: '{{ template_network_info.network_data["0"].label }}'
+    #     state: absent
+    label: '{{ template_network_info.network_data["0"].label }}'
+    state: absent
     validate_certs: '{{ vsphere.validate_certs }}'
   when: template_network_info.network_data["0"] is defined and template_network_info.network_data["0"].mac_addr is defined

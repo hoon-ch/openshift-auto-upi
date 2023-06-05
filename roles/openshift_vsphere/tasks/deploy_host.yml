@@ -13,7 +13,7 @@
     folder: '{{ vsphere.target_folder }}'
     name: '{{ virtual_machine_names[item.hostname] }}'
     template: '{{ vsphere.template_name }}'
-    customvalues:
+    advanced_settings:
       - key: guestinfo.ignition.config.data.encoding
         value: base64
       - key: guestinfo.ignition.config.data
