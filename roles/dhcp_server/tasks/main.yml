@@ -10,11 +10,17 @@
     service: dhcp
     permanent: True
     immediate: True
-    masquerade: yes
     state: enabled
   when: firewalld.rc == 0
   become: True
 
+- name: Enable masquerading in firewalld
+  ansible.posix.firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+    zone: public
+    
 - name: Add OpenShift DHCP records
   template:
     src: '{{ item.src }}'
