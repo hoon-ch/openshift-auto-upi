@@ -1,4 +1,8 @@
 *.swp
+*.dat
+*.log
+variables
+*-0
 /*.retry
 /.project
 

@@ -22,7 +22,7 @@
 
 - name : Mark control plane as unscheduleable
   lineinfile:
-    path: '{{ openshift_install_dir }}/manifests/cluster-scheduler-02-config.yml'
+    path: '{{ helper.install_conf_dir }}/manifests/cluster-scheduler-02-config.yml'
     regexp: '^(\s*mastersSchedulable:)'
     line: '\1 false'
     backrefs: True
