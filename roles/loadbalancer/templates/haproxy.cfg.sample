@@ -104,7 +104,7 @@ backend ingress-http
     balance source
     mode tcp
 {% for item in openshift_cluster_hosts %}
-{% if 'master' in item.roles %}
+{% if 'worker' in item.roles %}
     server {{ item.hostname }} {{ item.ipaddr }}:80 check
 {% endif %}
 {% endfor %}
@@ -123,7 +123,7 @@ backend ingress-https
     mode tcp
     # option ssl-hello-chk
 {% for item in openshift_cluster_hosts %}
-{% if 'master' in item.roles %}
+{% if 'worker' in item.roles %}
     server {{ item.hostname }} {{ item.ipaddr }}:443 check
 {% endif %}
 {% endfor %}

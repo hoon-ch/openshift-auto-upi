@@ -1,0 +1,106 @@
+# Configuration of OpenShift nodes
+#
+# Each OpenShift node is assigned one or more of the following roles:
+# - bootstrap
+# - master
+# - infra
+# - app
+# The role assignment is required in order to configure haproxy load balancer properly. A single
+# node can play multiple roles. For example, if you are installing a single-node-cluster the
+# single cluster node should be assigned both master and infra roles.
+#
+# The difference between infra and app nodes:
+# The haproxy load balancer will be configured to forward *.apps ingress traffic to infra nodes
+# but not to app nodes as it is expected that ingress pods are hosted on infra nodes.
+#
+# A typical production deployment has three master nodes, three infra nodes, and a number of
+# app nodes. Master nodes host OpenShift APIs and controllers, infra nodes host ingress load
+# balancer pods and image registry. App nodes run application workloads.
+#
+# As of OCP >= 4.8, a minimum cluster requires one master node. For OCP < 4.8, a minimum cluster
+# required one master node and one infra node.
+#
+# Note that the BMC configuration is only needed for bare metal installations. If not installing
+# on bare metal, feel free to remove the bmc related configuration from this file.
+# On the contrary, cpu, memory and disk parameters are used for virtualized installations only.
+# They will be ignored if deploying on bare metal.
+openshift_cluster_hosts:
+  - hostname: bootstrap
+    roles: [ bootstrap ]
+    ipaddr: 192.168.150.20
+    macaddr: 00:1c:14:00:0a:20
+    num_cpus: 4
+    memory_gb: 16
+    disk_gb: 300
+    ignition_config: bootstrap.ign
+#    ignition_transform:
+#      filetranspiler_roots:
+#        - files/ignition/filetranspiler/bootstrap
+#      jsonpatches:
+#        - files/ignition/jsonpatch/bootstrap/password.json
+  - hostname: master1
+    roles: [ master ]
+    ipaddr: 192.168.150.21
+    macaddr: 00:1c:14:00:0a:21
+    num_cpus: 8
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: master.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
+  - hostname: master2
+    roles: [ master ]
+    ipaddr: 192.168.150.22
+    macaddr: 00:1c:14:00:0a:22
+    num_cpus: 8
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: master.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
+  - hostname: master3
+    roles: [ master ]
+    ipaddr: 192.168.150.23
+    macaddr: 00:1c:14:00:0a:23
+    num_cpus: 8
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: master.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
+  - hostname: worker1
+    roles: [ worker ]
+    ipaddr: 192.168.150.31
+    macaddr: 00:1c:14:00:0a:31
+    num_cpus: 16
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: worker.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
+  - hostname: worker2
+    roles: [ worker ]
+    ipaddr: 192.168.150.32
+    macaddr: 00:1c:14:00:0a:32
+    num_cpus: 16
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: worker.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
+  - hostname: worker3
+    roles: [ worker ]
+    ipaddr: 192.168.150.33
+    macaddr: 00:1c:14:00:0a:33
+    num_cpus: 16
+    memory_gb: 32
+    disk_gb: 300
+    ignition_config: worker.ign
+#    ignition_transform:
+#      jsonpatches:
+#        - files/ignition/jsonpatch/non-bootstrap/password.json
